@@ -1,4 +1,6 @@
 <?Php
+header('Content-type: application/json; charset=utf-8');
+
  include("../lib/conn.php");
 $conn = new mysqli($servername, $username, $password, $dbname);
 
@@ -6,8 +8,8 @@ $conn = new mysqli($servername, $username, $password, $dbname);
     die("Connection failed: " . $conn->connect_error);
     $valid = false;
   }
-
-  $sql = "SELECT * FROM `farmlands`";
+  
+  $sql = "SELECT farmlands.* , company.name as ownerDisplayName  FROM `farmlands` LEFT JOIN `company` ON farmlands.company_id=company.id";
   $result = $conn->query($sql);
   $rows = array();
   if ($result->num_rows > 0) {
@@ -18,6 +20,6 @@ $conn = new mysqli($servername, $username, $password, $dbname);
   
   }
 
-print_r(json_encode($rows));
+echo json_encode($rows);
 
 ?>
