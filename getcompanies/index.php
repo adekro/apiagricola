@@ -2,11 +2,6 @@
 header('Content-type: application/json; charset=utf-8');
 
  include("../lib/conn.php");
-
-
-$id=$_GET['id'];
-
-
 $conn = new mysqli($servername, $username, $password, $dbname);
 
   if ($conn->connect_error) {
@@ -14,12 +9,7 @@ $conn = new mysqli($servername, $username, $password, $dbname);
     $valid = false;
   }
   
-  $sql = "SELECT farmlands.* , company.name as ownerDisplayName  FROM `farmlands` LEFT JOIN `company` ON farmlands.company_id=company.id";
-
-  if(is_numeric($id)){
-    $sql= $sql." where farmlands.id=".$id;
-  }
-
+  $sql = "SELECT company.* FROM `company` ";
   $result = $conn->query($sql);
   $rows = array();
 
